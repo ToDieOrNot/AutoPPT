@@ -1,8 +1,20 @@
 [
   {
-    "备注名": "kimi",
-    "模型名": "K2",
-    "请求地址": "https://www.openai.com/v1",
-    "密钥": "sk-rbum968a4be1d4fc23b69569158c80"
+    "note_name": "kimi",
+    "model_name": "Kimi-V1",
+    "request_url": "https://www.openai.com/v1",
+    "api_key": "1234"
+  },
+  {
+    "note_name": "kimi2",
+    "model_name": "kimi/K2",
+    "request_url": "https://www.openai.com/v1",
+    "api_key": "33333"
+  },
+  {
+    "note_name": "kimi1",
+    "model_name": "Kimi-V1",
+    "request_url": "https://www.openai.com/v1",
+    "api_key": "111"
   }
 ]
