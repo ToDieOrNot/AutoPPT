@@ -11,7 +11,7 @@ from pywebio.output import remove
 from pywebio.output import *
 
 dict_prompt_tabs = {"split_outline":"概括大纲","split_port":"点阵图","output_ppt":"生成PPT"}
-def batch_remove_scopes(scope_names=["models_table_scope","prompts_table_scope"]):
+def batch_remove_scopes(scope_names=["models_table_scope","prompts_table_scope","courses_table_scope"]):
     """
     批量删除多个scope，自动跳过不存在的scope
     参数:

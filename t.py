@@ -6,11 +6,12 @@
 @Date    ：2025/7/22
 @Descrip ：
 """
-
-from views.page_prompt import *
+from views.page_public import *
 from models.view_prompts_curd import *
 
-def main():
-    refresh_table()
-
-start_server(main, host="127.0.0.1", port=8080)
+tabs_datas=obj_searchall()
+datas = []
+for tab_code,tab_name in dict_prompt_tabs.items():
+    table_data = []
+    for idx, prompt_col in enumerate(tabs_datas[tab_code]):
+        print(prompt_col)

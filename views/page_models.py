@@ -94,7 +94,7 @@ def delete_model(index):
 def load_interface(models=None):
     """加载界面"""
     batch_remove_scopes()
-    put_scope('table_scope')
+    put_scope('models_table_scope')
     if models:
         refresh_table(models=models)
     else:

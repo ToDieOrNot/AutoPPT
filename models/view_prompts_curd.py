@@ -20,13 +20,13 @@ def parse_params(content):
         "param_file2": ""
     }
     if "{{{text1}}}" in content:
-        params["param_text1"] = "param_text1"
+        params["param_text1"] = "{{{text1}}}}"
     if "{{{text2}}}" in content:
-        params["param_text2"] = "param_text2"
+        params["param_text2"] = "{{{text2}}}}"
     if "{{{file1}}}" in content:
-        params["param_file1"] = "param_file1"
+        params["param_file1"] = "{{{file1}}}}"
     if "{{{file2}}}" in content:
-        params["param_file2"] = "param_file2"
+        params["param_file2"] = "{{{file2}}}}"
     return params
 
 def obj_searchall():

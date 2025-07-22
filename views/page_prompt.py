@@ -10,7 +10,6 @@
 
 from views.page_public import *
 from models.view_prompts_curd import *
-from pywebio import start_server
 from pywebio.input import *
 from pywebio.output import *
 
@@ -26,11 +25,11 @@ def refresh_table(tabs_datas=obj_searchall()):
             for idx, prompt_col in enumerate(tabs_datas[tab_code]):
                 row = [
                     tab_name,
-                    prompt_col.get('file_name', ''),
-                    prompt_col.get('param_text1', ''),
-                    prompt_col.get('param_text2', ''),
-                    prompt_col.get('param_file1', ''),
-                    prompt_col.get('param_file2', ''),
+                    prompt_col.get('file_name'),
+                    prompt_col.get('param_text1'),
+                    prompt_col.get('param_text2'),
+                    prompt_col.get('param_file1'),
+                    prompt_col.get('param_file2'),
                 ]
                 table_data.append(row)
             datas.append({'title': tab_name, 'content': [put_row([put_button("新建", onclick=create_prompt),None,put_button("查改", onclick=update_prompt)], size="auto 20px auto").style("display: flex; text-align: left; justify-content: left; "),put_table(table_data, header=['类型', '文件名', '文本参数1', '文本参数2', '文件参数1', '文件参数2']).style("display: flex; text-align: center; justify-content: center; align-items: center; width: 100%; height: 100%;")]})
@@ -58,15 +57,20 @@ def create_prompt():
 
 
 def update_prompt():
-    data = input_group("新建词组", [
-        select('Tab类型', name='tab_name', options=list(dict_prompt_tabs.values()), select=list(dict_prompt_tabs.values())[0], required=True),
-        input('文件名', name='file_name', required=True),
-        textarea('文件内容', name='file_content', required=True),
+    dict_update_msg = {}
+    tabs_datas = obj_searchall()
+    for i, j in tabs_datas.items():
+        for file_msg in j:
+            dict_update_msg[dict_prompt_tabs.get(i) + "--" + file_msg["file_name"]] = file_msg["file_content"]
+    data = input_group("查改词组", [
+        select('选择文件', name='tabfile_name', options=list(dict_update_msg.keys()), required=True, onchange=lambda c: input_update('file_content', value=dict_update_msg[c])),
+        textarea('文件内容', name='file_content',value=dict_update_msg[list(dict_update_msg.keys())[0]]),
     ])
     if data:
+        [data["tab_name"], data["file_name"]] = data["tabfile_name"].split("--")
         data['tab_code'] = next((k for k, v in dict_prompt_tabs.items() if v == data['tab_name']), None)
         obj_create(data)
-        toast("新建成功", color='success')
+        toast("修改成功", color='success')
     load_interface()
 
 def page_prompts():
