@@ -1,0 +1,93 @@
+{
+    "page1": {
+        "name": "章节主页",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "矩形 5",
+        "pic": ""
+    },
+    "page2": {
+        "name": "目录页",
+        "main_title": "",
+        "small_title": "",
+        "context": "文本框 11",
+        "pic": ""
+    },
+    "page3": {
+        "name": "学习要求",
+        "main_title": "",
+        "small_title": "",
+        "context": "文本框 7",
+        "pic": ""
+    },
+    "page4": {
+        "name": "重难点",
+        "main_title": "",
+        "small_title": "",
+        "context": "内容占位符 5",
+        "pic": ""
+    },
+    "page5": {
+        "name": "节标题页",
+        "main_title": "",
+        "small_title": "",
+        "context": "文本框 7",
+        "pic": ""
+    },
+    "page6": {
+        "name": "普通正文",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "文本框 3",
+        "pic": ""
+    },
+    "page7": {
+        "name": "小标题正文",
+        "main_title": "标题 1",
+        "small_title": "文本框 10",
+        "context": "文本框 4",
+        "pic": ""
+    },
+    "page8": {
+        "name": "图片正文",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "文本框 9",
+        "pic": "图片占位符 20"
+    },
+    "page9": {
+        "name": "小标题图片正文",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "文本框 9",
+        "pic": "图片占位符 20"
+    },
+    "page10": {
+        "name": "例题",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "文本框 10",
+        "pic": ""
+    },
+    "page11": {
+        "name": "思维导图",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "",
+        "pic": "图片占位符 20"
+    },
+    "page12": {
+        "name": "总结页",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "文本框 7",
+        "pic": ""
+    },
+    "page13": {
+        "name": "尾页",
+        "main_title": "标题 1",
+        "small_title": "",
+        "context": "文本框 7",
+        "pic": ""
+    }
+}

@@ -1,0 +1,64 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+'''
+@Project ：AutoPPT_Test
+@File    ：config_read.py
+@Date    ：2025/7/18 16:49
+@Descrip ：
+'''
+
+import json
+from dotenv import load_dotenv
+import os
+from typing import Any, Dict, Optional
+
+
+def read_env(env_file: Optional[str] = None) -> Dict[str, Any]:
+    """
+    读取 .env 文件并返回环境变量字典
+
+    Args:
+        env_file: .env 文件路径，默认为项目根目录下的 .env
+
+    Returns:
+        包含所有环境变量的字典，值会自动转换为 bool/int/float 类型
+
+    Raises:
+        FileNotFoundError: 指定的 .env 文件不存在
+    """
+    # 用于存储 .env 文件中明确设置的键
+    env_vars = {}
+
+    # 加载环境变量
+    if env_file:
+        if not os.path.exists(env_file):
+            raise FileNotFoundError(f".env 文件不存在: {env_file}")
+        load_dotenv(dotenv_path=env_file, override=True)
+    else:
+        load_dotenv(override=True)  # 加载默认 .env 文件
+
+    # 从 .env 文件中读取变量
+    with open(env_file or ".env", "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#"):  # 忽略空行和注释
+                key, value = line.split("=", 1)
+                key = key.strip()
+                value = value.strip()
+
+                # 布尔值转换
+                if value.lower() == 'true':
+                    env_vars[key] = True
+                elif value.lower() == 'false':
+                    env_vars[key] = False
+                # 整数转换
+                elif value.isdigit():
+                    env_vars[key] = int(value)
+                # 浮点数转换
+                elif value.replace('.', '', 1).isdigit():
+                    env_vars[key] = float(value)
+                # 字符串（默认）
+                else:
+                    env_vars[key] = value
+
+    return env_vars
