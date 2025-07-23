@@ -21,6 +21,7 @@ from models.config_read import read_env
 from views.page_models import page_models
 from views.page_prompt import page_prompts
 from views.page_course import page_course
+from views.page_template_pptx import page_template_pptx
 # from view.notice2 import notice2
 # from view.notice3 import notice3
 # from view.notice4 import notice4
@@ -55,13 +56,15 @@ def page_header():
                         "首页",
                         onclick=lambda: run_js('window.location.href="http://'+pywebio_index_url+'"')
                     ),
-                    put_button("文件", onclick=page_course),
+                    put_button("Auto", onclick=page_course),
+                    # put_button("文件", onclick=page_course),
                     put_button("点阵", onclick=test),
-                    put_button("PPT", onclick=test),
+                    # put_button("PPT", onclick=test),
                     put_button("口播", onclick=test),
                     put_button("试题", onclick=test),
                     put_button("真题", onclick=test),
                     put_button("授课", onclick=test),
+                    put_button("模板", onclick=page_template_pptx),
                     put_button("模型", onclick=page_models),
                     put_button("Prompt", onclick=page_prompts),
                 ]
