@@ -18,12 +18,14 @@ def save_models(models,MODELS_FILE = read_env().get('file_json_models')):
     with open(MODELS_FILE, 'w', encoding='utf-8') as f:
         json.dump(models, f, ensure_ascii=False, indent=2)
 
+
 def obj_searchall(MODELS_FILE = read_env().get('file_json_models')):
     try:
         with open(MODELS_FILE, 'r', encoding='utf-8') as f:
             return json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
+
 
 def obj_create(data):
     models = obj_searchall()

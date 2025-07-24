@@ -14,12 +14,14 @@ from pywebio.input import *
 from pywebio.output import *
 
 
-def refresh_course(courses=obj_searchall()):
+def refresh_course(courses={}):
     with use_scope('courses_table_scope'):
         put_button("新建", onclick=create_course)
         if not courses:
-            put_text("暂无数据")
-            return
+            courses = obj_searchall()
+            if not courses:
+                put_text("暂无数据")
+                return
         table_data = []
         for idx, course in enumerate(courses):
             row = [

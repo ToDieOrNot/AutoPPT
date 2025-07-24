@@ -12,17 +12,19 @@ from pywebio.output import *
 
 
 ## 配置
+### 上传
+dict_upload_option = {"PPT模板": "dir_pptx","提示词": "dir_prompts_output_ppt","章节教材": "dir_chapters","Word教材": "dir_course", "参数文件":"dir_params"}
 ### 提示词功能
 dict_prompt_tabs = {"split_outline":"概括大纲","split_port":"点阵图","output_ppt":"生成PPT"}
 ### PPTX页属性
-dict_pptx_page_type = ["首页", "目录页", "标题和内容", "内容页", "内容页", "总结页", "尾页"]
+dict_pptx_page_type = ["首页", "目录页", "标题页", "标题和内容", "内容页", "总结页", "尾页"]
 dict_pptx_page_params = {
     "名称":"name",
     "类型":"type",
     "描述":"descript",
     "placeholders":{
-        "一级标题1": "fisrt_title1",
-        "一级标题2": "fisrt_title2",
+        "一级标题1": "first_title1",
+        "一级标题2": "first_title2",
         "二级标题1": "second_title1",
         "二级标题2": "second_title2",
         "三级标题1": "third_title1",
@@ -39,7 +41,7 @@ dict_pptx_page_params = {
 ## 清除全部scopes
 
 
-def batch_remove_scopes(scope_names=["models_table_scope","prompts_table_scope","courses_table_scope","template_pptx_table_scope","pptx_page_setting_scope"]):
+def batch_remove_scopes(scope_names=["models_table_scope","prompts_table_scope","courses_table_scope","template_pptx_table_scope","pptx_page_setting_scope","upload_table_scope","run_scope"]):
     """
     批量删除多个scope，自动跳过不存在的scope
     参数:

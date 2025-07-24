@@ -13,6 +13,8 @@ import os
 from typing import Any, Dict, Optional
 
 
+
+
 def read_env(env_file: Optional[str] = None) -> Dict[str, Any]:
     """
     读取 .env 文件并返回环境变量字典
@@ -63,6 +65,22 @@ def read_env(env_file: Optional[str] = None) -> Dict[str, Any]:
 
     return env_vars
 
+
+
+def recursive_list_files(base_dir='./files/prompts'):
+    dict_files = {}
+    # 规范化路径，移除末尾斜杠
+    base_dir = os.path.normpath(base_dir)
+    base_len = len(base_dir) + 1  # +1 是为了包含路径分隔符
+    for root, _, files in os.walk(base_dir):
+        for file in files:
+            # 获取完整文件路径
+            full_path = os.path.join(root, file)
+            # 计算相对路径（相对于base_dir）
+            relative_path = full_path[base_len:]
+            # 添加到结果列表
+            dict_files[relative_path.split(".")[0]] = os.path.join("./",full_path)
+    return dict_files
 
 
 

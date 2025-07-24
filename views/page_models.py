@@ -14,20 +14,23 @@ from pywebio.input import *
 from pywebio.output import *
 
 
-def refresh_table(models=obj_searchall()):
+def refresh_table(models={}):
     """刷新表格显示"""
     with use_scope('models_table_scope'):
         put_button("新建", onclick=create_model)
         if not models:
-            put_text("暂无数据")
-            return
+            models = obj_searchall()
+            if not models:
+                put_text("暂无数据")
+                return
         table_data = []
         for idx, model in enumerate(models):
             row = [
                 model.get('note_name', ''),
                 model.get('model_name', ''),
                 model.get('request_url', ''),
-                model.get('api_key', ''),
+                # str(model.get('request_url', ''))[:11]+"......" if len(str(model.get('request_url', '')))>10 else str(model.get('request_url', '')),
+                str(model.get('api_key', ''))[:11]+"......" if len(str(model.get('api_key', '')))>10 else str(model.get('api_key', '')),
                 put_button('修改', onclick=lambda x=idx: update_model(x), small=True),
                 put_button('删除', onclick=lambda x=idx: delete_model(x), small=True, color='danger')
             ]

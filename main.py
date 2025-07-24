@@ -20,6 +20,9 @@ from models.config_read import read_env
 from views.page_header import page_header,pywebio_port,pywebio_host
 from views.page_models import page_models
 from views.page_prompt import page_prompts
+from views.page_template_pptx import page_template_pptx
+from views.page_upload import page_upload
+from views.page_run import page_run
 
 
 def main_body():
@@ -50,4 +53,4 @@ def index():
 
 if __name__ == '__main__':
     dict_env = read_env()
-    start_server([index,page_models,page_prompts], port=pywebio_port, host=pywebio_host, session_expire_seconds=600, debug=False)
+    start_server([index,page_models,page_prompts,page_template_pptx,page_upload,page_run], port=pywebio_port, host=pywebio_host, session_expire_seconds=600, debug=False)

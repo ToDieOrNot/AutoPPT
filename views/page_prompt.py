@@ -14,10 +14,12 @@ from pywebio.input import *
 from pywebio.output import *
 
 
-def refresh_table(tabs_datas=obj_searchall()):
+def refresh_table(tabs_datas={}):
     if not tabs_datas:
-        put_text("暂无数据")
-        return
+        tabs_datas = obj_searchall()
+        if not tabs_datas:
+            put_text("暂无数据")
+            return
     with use_scope('prompts_table_scope'):
         datas = []
         for tab_code,tab_name in dict_prompt_tabs.items():

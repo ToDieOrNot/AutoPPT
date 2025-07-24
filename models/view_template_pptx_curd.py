@@ -15,7 +15,7 @@ from PIL import Image
 import io
 
 import random
-import os
+import json,os
 from models.config_read import read_env,read_json_file
 
 def analyze_pptx(pptx_path):
@@ -84,14 +84,14 @@ def get_placeholder_key(dict_public_placeholders, dict_pptx_json_page , d_v, con
         return None
 
 
-def obj_searchall():
-    dict_pptx_page_params = {
+def get_dict_pptx_page_params():
+    return {
         "名称": "name",
         "类型": "type",
         "描述": "descript",
         "placeholders": {
-            "一级标题1": "fisrt_title1",
-            "一级标题2": "fisrt_title2",
+            "一级标题1": "first_title1",
+            "一级标题2": "first_title2",
             "二级标题1": "second_title1",
             "二级标题2": "second_title2",
             "三级标题1": "third_title1",
@@ -102,6 +102,11 @@ def obj_searchall():
             "插图2": "pic2"
         }
     }
+
+
+def obj_searchall():
+    dict_pptx_page_params = get_dict_pptx_page_params()
+    ## 反向映射.{'fisrt_title1': '一级标题1', 'fisrt_title2': '一级标题2', 'second_title1': '二级标题1', 'second_title2': '二级标题2'......}
     dict_reversed_pptx_page_placeholders = {v: k for k, v in dict_pptx_page_params["placeholders"].items()}
     dict_env = read_env()
     dir_pptx = dict_env.get("dir_pptx")
@@ -110,16 +115,19 @@ def obj_searchall():
     dict_files_data = {}
     pptx_json = read_json_file(file_json_pptx)
     for filepath_name in os.listdir(dir_pptx):
-        file_name = filepath_name.replace(".pptx","")
         if filepath_name.endswith(".pptx"):
             filepath_pptx = os.path.join(dir_pptx, filepath_name)
+            file_name = filepath_name.replace(".pptx","")
         else:
             continue
+        ## 文件内容.'1': {'第 一 章 操作系统概论': '标题 1', '主讲老师：***': '文本框 11'}, '2': {'目录\nCONTENTS': '文本框 4', '第一节   操作系统的概念\n第二节   操作系统的发展\n第三节   操作系统分类\n第四节   操作系统设计\n第五节   操作系统启动': '文本框 11'}......}
         pptx_detail = analyze_pptx(filepath_pptx)
         file_pptx_json = pptx_json.get(file_name) if pptx_json.get(file_name) else {str(i): {} for i in range(100)}
         dict_file_data = {}
         for page_num, page_data in pptx_detail.items():
+            # page_data: {'第 一 章 操作系统概论': '标题 1', '主讲老师：***': '文本框 11'}
             dict_file_pptx_json_page_num = file_pptx_json[page_num]
+            # dict_reversed_file_pptx_json_page_num: {'章节主页': 'type', '': 'pic2', '标题 1': 'fisrt_title1', '文本框 11': 'context1'}
             dict_reversed_file_pptx_json_page_num = {v: k for k, v in dict_file_pptx_json_page_num.items()}
             dict_placeholders = {}
             for placeholder_text, placeholder_code in page_data.items():
@@ -138,7 +146,7 @@ def obj_searchall():
                 "placeholders": dict_placeholders
             }
         dict_files_data[file_name] = dict_file_data
-        return dict_files_data
+    return dict_files_data
 
 
 def temp_obj_searchall():
@@ -164,8 +172,38 @@ def obj_create(data):
 
 
 def obj_update(data):
-    pass
+    dict_pptx_page_params = get_dict_pptx_page_params()
+    dict_env = read_env()
+    file_json_pptx = dict_env.get("file_json_pptx")
+    pptx_json = read_json_file(file_json_pptx)
+    ## {'demo': {'1': {'name': '章节主页', 'type': '章节主页', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '矩形 5', 'context2': '', 'pic1': '', 'pic2': ''}, '2': {'name': '目录页', 'type': '目录页', 'descript': '', 'first_title1': '', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 11', 'context2': '', 'pic1': '', 'pic2': ''}, '3': {'name': '学习要求', 'type': '学习要求', 'descript': '', 'first_title1': '', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 7', 'context2': '', 'pic1': '', 'pic2': ''}, '4': {'name': '重难点', 'type': '重难点', 'descript': '', 'first_title1': '', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '内容占位符 5', 'context2': '', 'pic1': '', 'pic2': ''}, '5': {'name': '节标题页', 'type': '节标题页', 'descript': '', 'first_title1': '', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 7', 'context2': '', 'pic1': '', 'pic2': ''}, '6': {'name': '普通正文', 'type': '普通正文', 'descript': '', 'first_title1': '', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 3', 'context2': '', 'pic1': '', 'pic2': ''}, '7': {'name': '小标题正文', 'type': '小标题正文', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '文本框 10', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 4', 'context2': '', 'pic1': '', 'pic2': ''}, '8': {'name': '图片正文', 'type': '图片正文', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 9', 'context2': '', 'pic1': '图片占位符 20', 'pic2': ''}, '9': {'name': '小标题图片正文', 'type': '小标题图片正文', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 9', 'context2': '', 'pic1': '图片占位符 20', 'pic2': ''}, '10': {'name': '例题', 'type': '例题', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 10', 'context2': '', 'pic1': '', 'pic2': ''}, '11': {'name': '思维导图', 'type': '思维导图', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '图片占位符 20', 'context2': '', 'pic1': '', 'pic2': ''}, '12': {'name': '', 'main_title': '标题 1', 'small_title': '', 'context': '文本框 7', 'pic': '', 'type': '', 'descript': '', 'first_title1': '', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '', 'context2': '', 'pic1': '', 'pic2': ''}, '13': {'name': '尾页', 'type': '尾页', 'descript': '', 'first_title1': '标题 1', 'first_title2': '', 'second_title1': '', 'second_title2': '', 'third_title1': '', 'third_title2': '', 'context1': '文本框 7', 'context2': '', 'pic1': '', 'pic2': ''}}}
+    file_name = data["file_name"]
+    page_pptx_json = {}
+    page_pptx_json["name"] = data["name"] if data.get("name") else ""
+    page_pptx_json["type"] = data["type"] if data.get("type") else ""
+    page_pptx_json["descript"] = data["descript"] if data.get("descript") else ""
+    for data_k, data_v in data.items():
+        if "placeholders" in data_k:
+            placeholder_type = dict_pptx_page_params["placeholders"][data_v]
+            page_pptx_json[placeholder_type] = data["placeholder_kv"].get(data_k)
+    for i in list(dict_pptx_page_params['placeholders'].values()):
+        if not page_pptx_json.get(i):
+            page_pptx_json[i] = ""
+    if not pptx_json.get(file_name):
+        pptx_json[file_name] = {}
+    pptx_json[file_name][str(data["page"])] = page_pptx_json
+    with open(file_json_pptx, 'w', encoding='utf-8') as f:
+        json.dump(pptx_json, f, ensure_ascii=False, indent=2)
+
+def obj_delete(filename):
+    dict_env = read_env()
+    dir_pptx = dict_env.get("dir_pptx")
+    file_json_pptx = dict_env.get("file_json_pptx")
+    file_path = os.path.join(dir_pptx, filename+".pptx")
+    os.remove(file_path) if os.path.isfile(file_path) else None
+    pptx_json = read_json_file(file_json_pptx)
+    pptx_json.pop(filename)
+    with open(file_json_pptx, 'w', encoding='utf-8') as f:
+        json.dump(pptx_json, f, ensure_ascii=False, indent=2)
 
 
-def obj_delete(data):
-    pass
