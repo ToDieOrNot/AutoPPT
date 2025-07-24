@@ -94,7 +94,7 @@ def output_modified_ppt(prs, original_path):
 
 def run():
     """运行主函数"""
-    ppt_path = "./files/templates/ppts/default/demo.pptx"
+    ppt_path = "files/templates/pptx/default/demo.pptx"
     # 读取PPT
     prs = read_ppt(ppt_path)
     # 逐页处理内容

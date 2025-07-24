@@ -62,3 +62,35 @@ def read_env(env_file: Optional[str] = None) -> Dict[str, Any]:
                     env_vars[key] = value
 
     return env_vars
+
+
+
+
+
+def read_json_file(file_path):
+    """
+    读取 JSON 文件并返回格式化的字典
+
+    参数:
+        file_path (str): JSON 文件路径
+
+    返回:
+        dict: 解析后的字典；若出错则返回 None
+    """
+    try:
+        # 打开并读取 JSON 文件
+        with open(file_path, 'r', encoding='utf-8') as f:
+            # 直接转换为 Python 字典
+            json_dict = json.load(f)
+
+        return json_dict  # 返回字典供后续使用
+
+    except FileNotFoundError:
+        print(f"错误：文件 '{file_path}' 不存在")
+        return None
+    except json.JSONDecodeError:
+        print(f"错误：文件 '{file_path}' 不是有效的 JSON 格式")
+        return None
+    except Exception as e:
+        print(f"读取文件时出错：{str(e)}")
+        return None

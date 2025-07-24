@@ -16,13 +16,10 @@ from pywebio.session import *
 from pywebio.platform.tornado import start_server
 from models.config_read import read_env
 
-# 登录注册
 
 from views.page_header import page_header,pywebio_port,pywebio_host
 from views.page_models import page_models
 from views.page_prompt import page_prompts
-
-
 
 
 def main_body():

@@ -7,11 +7,11 @@
 @Descrip ：
 """
 from views.page_public import *
-from models.view_prompts_curd import *
+# from models.view_prompts_curd import *
+from models.view_template_pptx_curd import *
+# from views.page_template_pptx import *
 
-tabs_datas=obj_searchall()
-datas = []
-for tab_code,tab_name in dict_prompt_tabs.items():
-    table_data = []
-    for idx, prompt_col in enumerate(tabs_datas[tab_code]):
-        print(prompt_col)
+# refresh_table()
+obj_searchall()
+
+
